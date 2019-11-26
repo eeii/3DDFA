@@ -158,7 +158,6 @@ def main(args):
                 print('Dump obj with sampled texture to {}'.format(wfp))
 
                 wfp = '{}_{}_neutral.obj'.format(img_fp.replace(suffix, ''), ind)
-                colors = get_colors(img_ori, vertices_neutral)
                 write_obj_with_colors(wfp, vertices_neutral, tri, colors)
                 print('Dump neutral obj with sampled texture to {}'.format(wfp))
             ind += 1
