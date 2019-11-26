@@ -129,6 +129,8 @@ def main(args):
             if args.dump_ply or args.dump_vertex or args.dump_depth or args.dump_pncc or args.dump_obj:
                 vertices = predict_dense(param, roi_box)
                 vertices_lst.append(vertices)
+                vertices_neutral = predict_dense(param, roi_box,
+                        neutral=True)
             if args.dump_ply:
                 dump_to_ply(vertices, tri, '{}_{}.ply'.format(img_fp.replace(suffix, ''), ind))
             if args.dump_vertex:
@@ -154,6 +156,11 @@ def main(args):
                 colors = get_colors(img_ori, vertices)
                 write_obj_with_colors(wfp, vertices, tri, colors)
                 print('Dump obj with sampled texture to {}'.format(wfp))
+
+                wfp = '{}_{}_neutral.obj'.format(img_fp.replace(suffix, ''), ind)
+                colors = get_colors(img_ori, vertices_neutral)
+                write_obj_with_colors(wfp, vertices_neutral, tri, colors)
+                print('Dump neutral obj with sampled texture to {}'.format(wfp))
             ind += 1
 
         if args.dump_pose:
