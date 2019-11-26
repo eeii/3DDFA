@@ -145,6 +145,11 @@ def main(args):
                         neutral=True)
                 np.savetxt(wfp, pts68_neutral, fmt='%.3f')
                 print('Save 68 3d landmarks of neutral model to {}'.format(wfp))
+                wfp = '{}_{}_landmarks.obj'.format(img_fp.replace(suffix, ''), ind)
+                colors = np.zeros(np.flip(pts68_neutral.shape))
+                colors[:, 1] = 1
+                write_obj_with_colors(wfp, pts68_neutral, np.empty([0, 0]), colors)
+                print('Save 68 3d landmarks of neutral model to {}'.format(wfp))
             if args.dump_roi_box:
                 wfp = '{}_{}.roibox'.format(img_fp.replace(suffix, ''), ind)
                 np.savetxt(wfp, roi_box, fmt='%.3f')
