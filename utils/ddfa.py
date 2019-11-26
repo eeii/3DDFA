@@ -62,6 +62,13 @@ def reconstruct_vertex(param, whitening=True, dense=False, transform=True, neutr
             # transform to image coordinate space
             vertex[1, :] = std_size + 1 - vertex[1, :]
 
+    if neutral:
+        # Rotate -90 alone z. Aligned with original basel model, where
+        # from the point of view at the front of model face, x axis is
+        # from left to right and y axis is upright.
+        vertex = np.matmul(np.array([[0, -1, 0], [1, 0, 0], [0, 0, 1]],
+            order='F'), vertex)
+
     return vertex
 
 
