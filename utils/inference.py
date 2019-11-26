@@ -127,6 +127,9 @@ def dump_vertex(vertex, wfp):
 def _predict_vertices(param, roi_bbox, dense, transform=True, neutral=False):
     vertex = reconstruct_vertex(param, dense=dense, transform=transform,
             neutral=neutral)
+    if neutral:
+        return vertex
+
     sx, sy, ex, ey = roi_bbox
     scale_x = (ex - sx) / 120
     scale_y = (ey - sy) / 120
