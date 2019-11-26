@@ -40,11 +40,12 @@ def reconstruct_vertex(param, whitening=True, dense=False, transform=True, neutr
             param = param * param_std + param_mean
 
     p, offset, alpha_shp, alpha_exp = _parse_param(param)
-    if neutral:
-        alpha_exp = np.zeros(alpha_exp.shape)
 
     if dense:
-        vertex = p @ (u + w_shp @ alpha_shp + w_exp @ alpha_exp).reshape(3, -1, order='F') + offset
+        if neutral:
+            vertex = (u + w_shp @ alpha_shp).reshape(3, -1, order='F')
+        else:
+            vertex = p @ (u + w_shp @ alpha_shp + w_exp @ alpha_exp).reshape(3, -1, order='F') + offset
 
         if transform:
             # transform to image coordinate space
