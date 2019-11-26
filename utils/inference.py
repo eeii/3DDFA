@@ -142,8 +142,8 @@ def _predict_vertices(param, roi_bbox, dense, transform=True, neutral=False):
     return vertex
 
 
-def predict_68pts(param, roi_box):
-    return _predict_vertices(param, roi_box, dense=False)
+def predict_68pts(param, roi_box, neutral=False):
+    return _predict_vertices(param, roi_box, dense=False, neutral=neutral)
 
 
 def predict_dense(param, roi_box, neutral=False):

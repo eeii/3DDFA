@@ -139,6 +139,12 @@ def main(args):
                 wfp = '{}_{}.txt'.format(img_fp.replace(suffix, ''), ind)
                 np.savetxt(wfp, pts68, fmt='%.3f')
                 print('Save 68 3d landmarks to {}'.format(wfp))
+
+                wfp = '{}_{}_neutral.txt'.format(img_fp.replace(suffix, ''), ind)
+                pts68_neutral = predict_68pts(param, roi_box,
+                        neutral=True)
+                np.savetxt(wfp, pts68_neutral, fmt='%.3f')
+                print('Save 68 3d landmarks of neutral model to {}'.format(wfp))
             if args.dump_roi_box:
                 wfp = '{}_{}.roibox'.format(img_fp.replace(suffix, ''), ind)
                 np.savetxt(wfp, roi_box, fmt='%.3f')

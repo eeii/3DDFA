@@ -46,19 +46,18 @@ def reconstruct_vertex(param, whitening=True, dense=False, transform=True, neutr
             vertex = (u + w_shp @ alpha_shp).reshape(3, -1, order='F')
         else:
             vertex = p @ (u + w_shp @ alpha_shp + w_exp @ alpha_exp).reshape(3, -1, order='F') + offset
-
-        if transform:
-            if neutral:
-                # mirror left and right
-                vertex[1, :] = -vertex[1, :]
-            else:
-                # transform to image coordinate space
-                vertex[1, :] = std_size + 1 - vertex[1, :]
     else:
         """For 68 pts"""
-        vertex = p @ (u_base + w_shp_base @ alpha_shp + w_exp_base @ alpha_exp).reshape(3, -1, order='F') + offset
+        if neutral:
+            vertex = (u_base + w_shp_base @ alpha_shp).reshape(3, -1, order='F')
+        else:
+            vertex = p @ (u_base + w_shp_base @ alpha_shp + w_exp_base @ alpha_exp).reshape(3, -1, order='F') + offset
 
-        if transform:
+    if transform:
+        if neutral:
+            # mirror left and right
+            vertex[1, :] = -vertex[1, :]
+        else:
             # transform to image coordinate space
             vertex[1, :] = std_size + 1 - vertex[1, :]
 
