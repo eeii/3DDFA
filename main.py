@@ -164,7 +164,7 @@ def main(args):
                 print('Dump to {} and {}'.format(wfp_crop, wfp_paf))
             if args.dump_obj:
                 wfp = '{}_{}.obj'.format(img_fp.replace(suffix, ''), ind)
-                colors = get_colors(img_ori, vertices)
+                colors = get_colors(img_ori, vertices) / 255
                 write_obj_with_colors(wfp, vertices, tri, colors)
                 print('Dump obj with sampled texture to {}'.format(wfp))
 
