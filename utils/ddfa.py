@@ -53,20 +53,10 @@ def reconstruct_vertex(param, whitening=True, dense=False, transform=True, neutr
         else:
             vertex = p @ (u_base + w_shp_base @ alpha_shp + w_exp_base @ alpha_exp).reshape(3, -1, order='F') + offset
 
-    if transform:
-        if neutral:
-            # mirror left and right
-            vertex[1, :] = -vertex[1, :]
-        else:
-            # transform to image coordinate space
-            vertex[1, :] = std_size + 1 - vertex[1, :]
-
-    if neutral:
-        # Rotate -90 alone z. Aligned with original basel model, where
-        # from the point of view at the front of model face, x axis is
-        # from left to right and y axis is upright.
-        vertex = np.matmul(np.array([[0, -1, 0], [1, 0, 0], [0, 0, 1]],
-            order='F'), vertex)
+    if transform and not neutral:
+        # transform to image coordinate space
+        vertex[1, :] = std_size + 1 - vertex[1, :]
+        vertex[2, :] = -vertex[2, :]
 
     return vertex
 
